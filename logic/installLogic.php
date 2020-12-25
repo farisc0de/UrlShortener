@@ -22,6 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $install->isPrimary("short_urls", "id");
 
     $install->isAutoinc("short_urls", ['id', 'INT(11)', 'UNSIGNED', 'NOT NULL']);
+    
+    // Enable Production Mode
+    /* -------------------------- */
+    $env_file = APP_PATH . "config/environment.php";
+
+    $env_file_content = file_get_contents($env_file);
+
+    $env_file_content = preg_replace("/installation/", "production", $env_file_content, 1);
+
+    file_put_contents($env_file, $env_file_content);
+    /* -------------------------- */
 
     $msg = "Software has been installed";
 }
